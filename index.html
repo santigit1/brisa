@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para el amor de mi vida 💛</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- Sobre -->
+    <div class="envelope" id="sobre"></div>
+
+    <div class="text">
+        Toca para abrir <span class="heart">💛</span>
+    </div>
+
+    <!-- Carta -->
+    <div class="carta" id="carta">
+        <div class="contenido">
+            <div id="mensaje"></div>
+            <div id="fotos">
+                <img src="img/brisa1.jpeg" alt="Foto 1">
+                <img src="img/brisa2.jpeg" alt="Foto 2">
+                <img src="img/brisa3.jpeg" alt="Foto 3">
+                <img src="img/brisa4.jpeg" alt="Foto 4">
+                <img src="img/brisa5.jpeg" alt="Foto 5">
+                <img src="img/brisa6.jpeg" alt="Foto 6">
+                <img src="img/brisa10.jpeg" alt="Foto 7">
+                <img src="img/brisa8.jpeg" alt="Foto 8">
+                <img src="img/brisa9.jpeg" alt="Foto 9">
+                <img src="img/brisa7.jpeg" alt="Foto 10">
+                <img src="img/brisa11.jpeg" alt="Foto 10">
+                <img src="img/brisa12.jpeg" alt="Foto 10">
+            </div>
+        </div>
+    </div>
+
+    <!-- Música de fondo -->
+    <audio id="musica" loop>
+        <source src="musica/lordhuron.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+</div>
+
+<script>
+const carta = document.getElementById("carta");
+const mensajeDiv = document.getElementById("mensaje");
+const fotos = document.querySelectorAll("#fotos img");
+const sobre = document.getElementById("sobre");
+const musica = document.getElementById("musica");
+
+const texto = "Hola mi amor... 💌 ¿Conoces lo que es la timidez de los árboles? “Timidez” le dicen al fenómeno botánico que hace que las copas de los árboles no se choquen entre sí. La timidez de los árboles hace que estén simétricamente cerca, pero que no se toquen. Lo suficientemente cerca como para formar un paisaje, un camino por donde se cuela el sol y también la lluvia. Están, a su vez, lo suficientemente lejos para no inmiscuirse en asuntos ajenos: una distancia perfecta, fría, calculada. Quizás esa timidez entre los árboles sea posible porque ellos nada saben de deseos o de intenciones segundas, o de mirar a la cara de otra persona fijo mientras te habla y no poder concentrarte porque empezás a pensar lo linda que está. Quizás la timidez sea una buena estrategia para que la cercanía del otro no irrumpa nuestro espacio. Sabemos de los líos que se arman cuando hay dos. Los árboles no saben de la energía atómica que causa rozarse las manos sin querer y, por un rato, desconocer cualquier lógica de espacio y tiempo. Ellos nunca se tocan —ah, sí—, pero forman paisajes. En mi experiencia, no es nada aconsejable seguir el comportamiento de los árboles, de todos modos. Es verdad que mantener distancia hace que la vida se mantenga ordenada y no sea tan misteriosa, pero la timidez, NO. La timidez nunca hizo nacer grandes historias.";
+let i = 0;
+let fotoIndex = 0;
+let abierta = false;
+let mensajeTimeout;
+let fotoTimeout;
+
+function toggleCarta() {
+    if(!abierta){
+        // abrir carta
+        carta.style.display = "flex";
+        carta.style.pointerEvents = "auto";
+        setTimeout(() => carta.classList.add("abierta"), 50);
+
+        // reproducir música al abrir
+        musica.play();
+
+        // iniciar escritura de mensaje
+        if(i === 0) escribirMensaje();
+
+        // mostrar fotos
+        if(fotoIndex === 0){
+            fotos[0].style.setProperty('--index', 0);
+            fotos[0].classList.add('visible');
+            fotoIndex = 1;
+            fotoTimeout = setTimeout(mostrarFotosCascada, 2000);
+        }
+
+        abierta = true;
+
+    } else {
+        // cerrar carta suavemente
+        carta.classList.remove("abierta");
+
+        // pausar música
+        musica.pause();
+        musica.currentTime = 0;
+
+        // limpiar timeouts
+        clearTimeout(mensajeTimeout);
+        clearTimeout(fotoTimeout);
+
+        // ocultar fotos y mensaje
+        fotos.forEach(img => img.classList.remove("visible"));
+
+        setTimeout(() => {
+            carta.style.display = "none";
+            carta.style.pointerEvents = "none";
+            mensajeDiv.innerHTML = "";
+            i = 0;
+            fotoIndex = 0;
+        }, 500);
+
+        abierta = false;
+    }
+}
+
+// escribir mensaje y ajustar tamaño de carta
+function escribirMensaje() {
+    if(i < texto.length){
+        mensajeDiv.innerHTML += texto.charAt(i);
+        i++;
+
+        // carta crece horizontal y verticalmente según texto
+        const ancho = 450 + (i * 1.2); 
+        carta.style.width = ancho > 800 ? '800px' : ancho + 'px';
+
+        mensajeTimeout = setTimeout(escribirMensaje, 120);
+    }
+}
+
+// mostrar fotos en cascada
+function mostrarFotosCascada(){
+    if(fotoIndex < fotos.length){
+        fotos[fotoIndex].style.setProperty('--index', fotoIndex);
+        fotos[fotoIndex].classList.add('visible');
+        fotoIndex++;
+        fotoTimeout = setTimeout(mostrarFotosCascada, 2000);
+    }
+}
+
+// permitir cerrar haciendo clic en la carta o el sobre
+carta.addEventListener("click", toggleCarta);
+sobre.addEventListener("click", toggleCarta);
+</script>
+</body>
+</html>

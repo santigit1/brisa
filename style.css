@@ -1,138 +1,211 @@
 /* RESET */
-* { margin:0; padding:0; box-sizing:border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 /* BODY / FONDO */
 body {
     font-family: Arial, sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    background:#ffe6e6;
-    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #ffe6e6;
+    position: relative;
+    overflow: hidden;
 }
 
-body::before{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:100%;
-    background: linear-gradient(rgba(255,248,240,0.35), rgba(255,248,240,0.35)),
-                url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=100&w=1974&auto=format&fit=crop");
-    background-size:cover;
-    background-position:center;
-    z-index:-1;
+.intro-text {
+    max-width: 320px;
+    margin-bottom: 35px;
+    font-family: 'Georgia', serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #2b1d0e;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.intro-text.oculto {
+    opacity: 0;
+    transform: translateY(-15px);
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(255,248,240,0.45), rgba(255,248,240,0.45)),
+        url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=100&w=1974&auto=format&fit=crop");
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
 }
 
 /* CONTENEDOR */
-.container { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; }
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+}
 
 /* SOBRE */
 .envelope {
-    width:200px; height:120px; background:#fffdf9; position:relative;
-    border-radius:14px; border:2px solid #1e1e1e;
-    box-shadow:0 10px 20px rgba(0,0,0,0.15);
-    cursor:pointer; animation: pulse 2.8s infinite;
+    width: 180px;
+    height: 110px;
+    background: #fffdf9;
+    position: relative;
+    border-radius: 14px;
+    border: 2px solid #1e1e1e;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+    animation: pulse 2.8s infinite;
     transition: transform 0.3s ease;
-    z-index:2;
+    z-index: 2;
 }
 
-.envelope::before{
-    content:"";
-    position:absolute; top:0; left:0; width:100%; height:100%;
-    background:#f3d5c0; clip-path: polygon(0 0, 50% 60%, 100% 0);
-    border-radius:14px 14px 0 0; border-bottom:2px solid #1e1e1e;
+.envelope::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #f3d5c0;
+    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    border-radius: 14px 14px 0 0;
+    border-bottom: 2px solid #1e1e1e;
 }
 
-.envelope:hover { transform: scale(1.05); }
+.envelope:hover {
+    transform: scale(1.05);
+}
 
 /* TEXTO DE INSTRUCCIÓN */
-.text { margin-top:25px; font-size:1.5rem; color:#2b1d0e; letter-spacing:1.5px; font-weight:600; text-shadow:0 1px 3px rgba(255,255,255,0.6); animation: fadeIn 2s ease-in-out infinite alternate; }
-.heart { display:inline-block; animation: heartbeat 1.8s infinite ease-in-out; }
+.text {
+    margin-top: 25px;
+    font-size: 1.2rem; /* reducido para móvil */
+    color: #2b1d0e;
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(255,255,255,0.6);
+    animation: fadeIn 2s ease-in-out infinite alternate;
+}
+
+.heart {
+    display: inline-block;
+    animation: heartbeat 1.8s infinite ease-in-out;
+}
 
 /* CARTA */
 .carta {
-    position:absolute; 
-    min-width:300px;
-    width:auto; 
-    max-width:800px;
-    max-height:80vh;
-
+    position: absolute;
+    width: 90%;
+    max-width: 500px; /* más controlado */
+    max-height: 80vh;
     background-color: #fff8ec;
     background-image: url('https://www.transparenttextures.com/patterns/white-wall-2.png');
-    background-repeat: repeat;
-
-    border:1px solid #d4cbb0;
-    border-radius:15px;
-    padding:25px;
-    box-shadow:0 12px 28px rgba(0,0,0,0.15);
-    font-family:'Georgia', serif;
-    font-size:1.8rem;
-    line-height:2;
-    opacity:0;
-    pointer-events:none;
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    overflow-y:auto;
-    transform:scale(0.6);
+    border: 1px solid #d4cbb0;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    font-family: 'Georgia', serif;
+    font-size: 1.2rem; /* MUY importante para móvil */
+    line-height: 1.7;
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    transform: scale(0.8);
     transition: all 0.5s ease;
-    z-index:3; 
+    z-index: 3;
 }
 
-.carta.abierta{
-    opacity:1;
-    transform:scale(1) translateY(30px);
-    pointer-events:auto;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.15), 0 0 20px rgba(255,223,186,0.3);
+.carta.abierta {
+    opacity: 1;
+    transform: scale(1) translateY(20px);
+    pointer-events: auto;
+    box-shadow:
+        0 12px 28px rgba(0,0,0,0.15),
+        0 0 20px rgba(255,223,186,0.3);
 }
 
-.carta .contenido{ 
-    width:100%; 
-    display:flex; 
-    flex-direction:column; 
-    align-items:center; 
-    font-size:1.8rem; 
-    line-height:2; 
-    text-align:center;
+.carta .contenido {
+    width: 100%;
+    text-align: center;
 }
 
 /* FOTOS */
-#fotos{
+#fotos {
     position: relative;
-    width:100%;
-    height:250px;
-    margin-top:40px;
+    width: 100%;
+    height: 220px;
+    margin-top: 30px;
 }
 
-#fotos img{
-    width:240px;   /* antes 150px */
-    height:240px;  /* antes 150px */
-    object-fit:cover;
-    border-radius:10px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.25);
-    opacity:0;
-    position:absolute;
-    top:0;
-    left:50%;
-    transform:translateX(-50%) scale(0.8);
+#fotos img {
+    width: 160px; /* más adaptado a celular */
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
     transition: transform 0.8s ease, opacity 0.8s ease;
 }
 
 #fotos img.visible {
     opacity: 1;
     z-index: calc(var(--index) + 1);
-    transform: translateX(-50%) scale(1.2)   /* un poquito más grande */
-            rotate(calc(-2deg + var(--index)*2deg)) 
-               translateY(calc(var(--index) * 15px));
+    transform:
+        translateX(-50%)
+        scale(1)
+        rotate(calc(-2deg + var(--index)*2deg))
+        translateY(calc(var(--index) * 12px));
     animation: float 3s ease-in-out infinite alternate;
 }
+
 /* ANIMACIONES */
-@keyframes fadeIn { from{opacity:0.6;} to{opacity:1;} }
-@keyframes pulse{ 0%{scale:1} 50%{scale:1.05} 100%{scale:1} }
-@keyframes heartbeat{0%{scale:1} 25%{scale:1.15} 40%{scale:1} 60%{scale:1.12} 100%{scale:1}}
+@keyframes fadeIn {
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.15); }
+    40% { transform: scale(1); }
+    60% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+}
+
 @keyframes float {
-    0% { transform: translateX(-50%) translateY(0) scale(1) rotate(calc(-2deg + var(--index)*2deg)); }
-    50% { transform: translateX(-50%) translateY(-8px) scale(1) rotate(calc(-1deg + var(--index)*2deg)); }
-    100% { transform: translateX(-50%) translateY(0) scale(1) rotate(calc(-2deg + var(--index)*2deg)); }
+    0% {
+        transform: translateX(-50%) translateY(0) scale(1)
+        rotate(calc(-2deg + var(--index)*2deg));
+    }
+    50% {
+        transform: translateX(-50%) translateY(-6px) scale(1)
+        rotate(calc(-1deg + var(--index)*2deg));
+    }
+    100% {
+        transform: translateX(-50%) translateY(0) scale(1)
+        rotate(calc(-2deg + var(--index)*2deg));
+    }
 }
